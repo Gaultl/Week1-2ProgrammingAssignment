@@ -21,6 +21,7 @@ public class Polygon {
         sideLength = 1.0;
         shapeType = "triangle";
         calculatePerimeter();
+        calculateArea();
     }
 
     /**
@@ -35,6 +36,7 @@ public class Polygon {
         sideLength = length;
         shapeType = whatShape;
         calculatePerimeter();
+        calculateArea();
     }
 
     //accessors
@@ -106,24 +108,12 @@ public class Polygon {
     }
 
     /**
-     * Calculates the internal angles of the polygon
-     *
-     * @return The internal angle of the polygon
-     */
-    private double calculateInternalAngle(){
-        if(numSides > 0) {
-            internalAngle = (((double) numSides - 2) * 180) / numSides;
-        }
-        return internalAngle;
-    }
-
-    /**
      * Calculates the area of the polygon
      *
      * @return The area of the polygon
      */
     public double calculateArea(){
-        double apothem = (sideLength/2)*(Math.tan(calculateInternalAngle()/2));
+        double apothem = sideLength/(2*Math.tan(Math.toRadians(180.0/numSides)));
         area = (apothem*calculatePerimeter())/2.0;
         return area;
     }
@@ -137,7 +127,7 @@ public class Polygon {
         }
 
         return "Your shape is a " + shapeType + "\nIt has " + numSides + " sides." + "\nIt has a side length of " +
-                df.format(sideLength) + "\nIt has a perimeter of " + df.format(calculatePerimeter()) + " units.";// +
-                //"\nIt has an area of " + df.format(calculateArea()) + " units squared.";
+                df.format(sideLength) + "\nIt has a perimeter of " + df.format(calculatePerimeter()) + " units." +
+                "\nIt has an area of " + df.format(calculateArea()) + " units squared.";
     }
 }
