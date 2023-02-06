@@ -32,8 +32,19 @@ public class Polygon {
      * @param whatShape shape type
      */
     public Polygon(int amtSides, double length, String whatShape) {
-        numSides = amtSides;
-        sideLength = length;
+        if(amtSides < 3){
+            System.out.println("Not a valid number of sides");
+            amtSides = 3;
+        } else {
+            numSides = amtSides;
+        }
+        if (length <= 0){
+            System.out.println("Not a valid side length");
+            sideLength = 1;
+        } else {
+            sideLength = length;
+        }
+
         shapeType = whatShape;
         calculatePerimeter();
         calculateArea();
@@ -121,10 +132,6 @@ public class Polygon {
 
     public String toString(){
         DecimalFormat df = new DecimalFormat("#.###");
-
-        if(numSides < 3 || sideLength < 0){
-            return "Not a valid Polygon";
-        }
 
         return "Your shape is a " + shapeType + "\nIt has " + numSides + " sides." + "\nIt has a side length of " +
                 df.format(sideLength) + "\nIt has a perimeter of " + df.format(calculatePerimeter()) + " units." +
