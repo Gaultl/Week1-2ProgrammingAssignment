@@ -5,6 +5,12 @@ public class Polygon {
     private double sideLength;
     private String shapeType;
 
+    private double internalAngle;
+
+    private double perimeter;
+
+    private double area;
+
     //constructors
 
     /**
@@ -14,6 +20,7 @@ public class Polygon {
         numSides = 3;
         sideLength = 1.0;
         shapeType = "triangle";
+        calculatePerimeter();
     }
 
     /**
@@ -24,18 +31,10 @@ public class Polygon {
      * @param whatShape shape type
      */
     public Polygon(int amtSides, double length, String whatShape) {
-        numSides = 3;
-        sideLength = 1.0;
-
-        if(amtSides > 0) {
-            numSides = amtSides;
-        }
-
-        if(length > 0){
-            sideLength = length;
-        }
-
+        numSides = amtSides;
+        sideLength = length;
         shapeType = whatShape;
+        calculatePerimeter();
     }
 
     //accessors
@@ -96,11 +95,49 @@ public class Polygon {
 
     //other methods
 
+    /**
+     * Calculates the perimeter of the polygon
+     *
+     * @return The perimeter of the polygon
+     */
+    public double calculatePerimeter(){
+        perimeter = numSides * sideLength;
+        return perimeter;
+    }
+
+    /**
+     * Calculates the internal angles of the polygon
+     *
+     * @return The internal angle of the polygon
+     */
+    private double calculateInternalAngle(){
+        if(numSides > 0) {
+            internalAngle = (((double) numSides - 2) * 180) / numSides;
+        }
+        return internalAngle;
+    }
+
+    /**
+     * Calculates the area of the polygon
+     *
+     * @return The area of the polygon
+     */
+    public double calculateArea(){
+        double apothem = (sideLength/2)*(Math.tan(calculateInternalAngle()/2));
+        area = (apothem*calculatePerimeter())/2.0;
+        return area;
+    }
 
 
     public String toString(){
         DecimalFormat df = new DecimalFormat("#.###");
-        return "Your shape is a " + shapeType + "\nIt has a side length of " + df.format(sideLength) +
-                "\nIt has " + numSides + " sides.";
+
+        if(numSides < 3 || sideLength < 0){
+            return "Not a valid Polygon";
+        }
+
+        return "Your shape is a " + shapeType + "\nIt has " + numSides + " sides." + "\nIt has a side length of " +
+                df.format(sideLength) + "\nIt has a perimeter of " + df.format(calculatePerimeter()) + " units.";// +
+                //"\nIt has an area of " + df.format(calculateArea()) + " units squared.";
     }
 }
