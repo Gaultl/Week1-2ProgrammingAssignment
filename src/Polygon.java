@@ -4,12 +4,10 @@ public class Polygon {
     private int numSides;
     private double sideLength;
     private String shapeType;
-
-    private double internalAngle;
-
     private double perimeter;
-
     private double area;
+
+    private boolean validPolygon;
 
     //constructors
 
@@ -19,7 +17,8 @@ public class Polygon {
     public Polygon() {
         numSides = 3;
         sideLength = 1.0;
-        shapeType = "triangle";
+        shapeType = "Triangle";
+        validPolygon = true;
         calculatePerimeter();
         calculateArea();
     }
@@ -32,20 +31,23 @@ public class Polygon {
      * @param whatShape shape type
      */
     public Polygon(int amtSides, double length, String whatShape) {
+        numSides = amtSides;
+        sideLength = length;
+        shapeType = whatShape;
+
         if(amtSides < 3){
-            System.out.println("Not a valid number of sides");
-            amtSides = 3;
-        } else {
-            numSides = amtSides;
+            numSides = 3;
+            sideLength = 1.0;
+            shapeType = "Triangle";
+            validPolygon = false;
         }
-        if (length <= 0){
-            System.out.println("Not a valid side length");
-            sideLength = 1;
-        } else {
-            sideLength = length;
+        if(length <= 0){
+            numSides = 3;
+            sideLength = 1.0;
+            shapeType = "Triangle";
+            validPolygon = false;
         }
 
-        shapeType = whatShape;
         calculatePerimeter();
         calculateArea();
     }
@@ -85,6 +87,7 @@ public class Polygon {
     public void setNumSides(int amtSides){
         if(amtSides >= 3){
             numSides = amtSides;
+            validPolygon = true;
         }
     }
 
@@ -95,6 +98,7 @@ public class Polygon {
     public void setSideLength(double length){
         if(length > 0){
             sideLength = length;
+            validPolygon = true;
         }
     }
 
@@ -104,6 +108,7 @@ public class Polygon {
      */
     public void setShapeType(String type) {
         shapeType = type;
+        validPolygon = true;
     }
 
     //other methods
@@ -132,6 +137,10 @@ public class Polygon {
 
     public String toString(){
         DecimalFormat df = new DecimalFormat("#.###");
+
+        if(!validPolygon){
+            return "Not a valid polygon. Your polygon was given a default of three sides named \"Triangle\", and each side has a length of 1.0 units.";
+        }
 
         return "Your shape is a " + shapeType + "\nIt has " + numSides + " sides." + "\nIt has a side length of " +
                 df.format(sideLength) + "\nIt has a perimeter of " + df.format(calculatePerimeter()) + " units." +
