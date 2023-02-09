@@ -1,4 +1,14 @@
 import java.text.DecimalFormat;
+
+/**
+ * @file Polygon.java
+ * @date 2/9/2023
+ * @author Lauren Gault
+ *
+ * @Description Creates a regular polygon with a number of sides, a side length, a shape type, perimeter and area.
+ * The user has the ability to calculate the perimeter and area of the polygon and print
+ * information about the rectangle.
+ */
 public class Polygon {
     //instance variables
     private int numSides;
@@ -78,6 +88,14 @@ public class Polygon {
         return shapeType;
     }
 
+    /**
+     *
+     * @return Calculates and returns the area of the polygon
+     */
+    public double getArea(){
+        return calculateArea();
+    }
+
     //mutators
 
     /**
@@ -106,7 +124,7 @@ public class Polygon {
      * Allows the user to change the shape type of the Polygon object
      * @param type The desired shape type
      */
-    public void setShapeType(String type) {
+    public void setShapeName(String type) {
         shapeType = type;
         validPolygon = true;
     }
@@ -120,6 +138,7 @@ public class Polygon {
      */
     public double calculatePerimeter(){
         perimeter = numSides * sideLength;
+        perimeter = Math.round(perimeter*1000)/1000.0;
         return perimeter;
     }
 
@@ -131,6 +150,7 @@ public class Polygon {
     public double calculateArea(){
         double apothem = sideLength/(2*Math.tan(Math.toRadians(180.0/numSides)));
         area = (apothem*calculatePerimeter())/2.0;
+        area = Math.round(area*1000)/1000.0;
         return area;
     }
 
